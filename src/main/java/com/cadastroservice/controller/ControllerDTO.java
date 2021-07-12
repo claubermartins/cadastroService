@@ -4,9 +4,7 @@ import com.cadastroservice.model.PessoaDTO;
 import com.cadastroservice.service.PessoaServiceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +20,16 @@ public class ControllerDTO {
     @GetMapping
     ResponseEntity<List<PessoaDTO>> obterTodos(){
         List<PessoaDTO> pessoas = pessoaServiceDTO.obterTodos();
+        return ResponseEntity.ok(pessoas);
+    }
+    @GetMapping("{id}")
+    ResponseEntity<PessoaDTO> obterPorId(@PathVariable Long id){
+        PessoaDTO pessoas = pessoaServiceDTO.obterPorId(id);
+        return ResponseEntity.ok(pessoas);
+    }
+    @PostMapping()
+    ResponseEntity<PessoaDTO> salvar(@RequestBody PessoaDTO pessoa){
+        PessoaDTO pessoas = pessoaServiceDTO.salvar(pessoa);
         return ResponseEntity.ok(pessoas);
     }
 }

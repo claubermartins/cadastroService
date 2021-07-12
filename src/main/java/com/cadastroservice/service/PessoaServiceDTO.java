@@ -19,7 +19,7 @@ public class PessoaServiceDTO {
         String urlBase = "http://localhost:8080/cadastramento";
 
         HttpHeaders header = new HttpHeaders();
-        header.add("ContentType", "Appication/json");
+        header.set("ContentType", "Appication/json");
 
         HttpEntity httpEntity = new HttpEntity(header);
 
@@ -27,5 +27,32 @@ public class PessoaServiceDTO {
 
         return Arrays.asList(pessoas.getBody());
     }
+    public PessoaDTO obterPorId(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        String urlBase = "http://localhost:8080/cadastramento"+"/"+id;
+
+        HttpHeaders header = new HttpHeaders();
+        header.set("ContentType", "Appication/json");
+
+        HttpEntity httpEntity = new HttpEntity(header);
+
+        ResponseEntity<PessoaDTO> pessoas = restTemplate.exchange(urlBase, HttpMethod.GET, httpEntity,PessoaDTO.class);
+
+        return pessoas.getBody();
+    }
+    public PessoaDTO salvar(PessoaDTO pessoa) {
+        RestTemplate restTemplate = new RestTemplate();
+        String urlBase = "http://localhost:8080/cadastramento";
+
+        HttpHeaders header = new HttpHeaders();
+        header.set("ContentType", "Appication/json");
+
+        HttpEntity httpEntity = new HttpEntity(pessoa,header);
+
+        ResponseEntity<PessoaDTO> pessoas = restTemplate.exchange(urlBase, HttpMethod.POST, httpEntity,PessoaDTO.class);
+
+        return pessoas.getBody();
+    }
+
 
 }
